@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply Online — Your College Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-crest">YC</span>
+      <span class="brand-text">
+        <strong>Your College Name</strong>
+        <span>Location, Region</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Toggle menu">Menu</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faculty.html">Faculty</a></li>
+        <li><a href="admissions.html">Admissions</a></li>
+        <li><a href="apply.html" aria-current="page">Apply Online</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="page-header">
+  <div class="wrap">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Apply Online</p>
+    <h1>Apply Online</h1>
+    <p style="color:var(--parchment-deep); max-width:60ch;">Submit an application for any class from Play Group through Class 12. Our admissions office will review your application and contact you.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <form class="form-panel" id="application-form" style="max-width:640px;" novalidate>
+      <h3>Student Details</h3>
+      <div class="field">
+        <label for="studentName">Student's full name *</label>
+        <input type="text" id="studentName" required>
+      </div>
+      <div class="dash-row">
+        <div class="field">
+          <label for="dob">Date of birth *</label>
+          <input type="date" id="dob" required>
+        </div>
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender">
+            <option>Male</option>
+            <option>Female</option>
+            <option>Prefer not to say</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="classApplying">Class applying for *</label>
+        <select id="classApplying" required>
+          <option value="">Select a class</option>
+          <option>Play Group</option>
+          <option>Nursery</option>
+          <option>Kindergarten (KG)</option>
+          <option>Class 1</option>
+          <option>Class 2</option>
+          <option>Class 3</option>
+          <option>Class 4</option>
+          <option>Class 5</option>
+          <option>Class 6</option>
+          <option>Class 7</option>
+          <option>Class 8</option>
+          <option>Class 9</option>
+          <option>Class 10</option>
+          <option>Class 11 (1st Year)</option>
+          <option>Class 12 (2nd Year)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="previousSchool">Previous school (if any)</label>
+        <input type="text" id="previousSchool">
+      </div>
+
+      <h3 style="margin-top:8px;">Parent / Guardian Details</h3>
+      <div class="field">
+        <label for="parentName">Parent / guardian name *</label>
+        <input type="text" id="parentName" required>
+      </div>
+      <div class="dash-row">
+        <div class="field">
+          <label for="phone">Phone number *</label>
+          <input type="tel" id="phone" required>
+        </div>
+        <div class="field">
+          <label for="email">Email address</label>
+          <input type="email" id="email">
+        </div>
+      </div>
+      <div class="field">
+        <label for="address">Home address</label>
+        <textarea id="address"></textarea>
+      </div>
+      <div class="field">
+        <label for="message">Additional notes (optional)</label>
+        <textarea id="message"></textarea>
+      </div>
+
+      <h3 style="margin-top:8px;">Documents (optional, under 1MB each)</h3>
+      <div class="dash-row">
+        <div class="field">
+          <label for="document">Birth certificate / B-form (PDF, JPG, or PNG)</label>
+          <input type="file" id="document" accept=".pdf,.jpg,.jpeg,.png,.webp">
+        </div>
+        <div class="field">
+          <label for="photo">Student photo (JPG or PNG)</label>
+          <input type="file" id="photo" accept=".jpg,.jpeg,.png,.webp">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit Application</button>
+      <p class="form-status" role="status" id="apply-status"></p>
+      <p class="form-note">Files must be under 1MB each. Your application goes directly to the admissions office for review.</p>
+    </form>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h4>Your College Name</h4>
+        <p style="color:var(--parchment-deep); font-size:0.9rem; max-width:32ch;">Address line, City, Region, Postal Code.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="faculty.html">Faculty</a></li>
+          <li><a href="admissions.html">Admissions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Phone: 0000-000000</li>
+          <li>Email: info@yourcollege.edu</li>
+          <li><a href="contact.html">Contact form</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Your College Name. All rights reserved.</span>
+      <span>Built with HTML, CSS &amp; JavaScript &nbsp;•&nbsp; <a href="admin-login.html" style="color:var(--parchment-deep);">Admin</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/script.js"></script>
+<script>
+  document.getElementById('application-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var status = document.getElementById('apply-status');
+    var submitBtn = this.querySelector('button[type="submit"]');
+
+    var required = ['studentName', 'dob', 'classApplying', 'parentName', 'phone'];
+    var valid = required.every(function (id) { return document.getElementById(id).value.trim(); });
+
+    if (!valid) {
+      status.textContent = 'Please fill in all required fields (marked *).';
+      status.className = 'form-status error';
+      return;
+    }
+
+    var documentFile = document.getElementById('document').files[0];
+    var photoFile = document.getElementById('photo').files[0];
+    var MAX = 1024 * 1024; // 1MB
+
+    if (documentFile && documentFile.size >= MAX) {
+      status.textContent = 'The document file must be under 1MB.';
+      status.className = 'form-status error';
+      return;
+    }
+    if (photoFile && photoFile.size >= MAX) {
+      status.textContent = 'The photo file must be under 1MB.';
+      status.className = 'form-status error';
+      return;
+    }
+
+    var formData = new FormData();
+    formData.append('studentName', document.getElementById('studentName').value.trim());
+    formData.append('dob', document.getElementById('dob').value);
+    formData.append('gender', document.getElementById('gender').value);
+    formData.append('classApplying', document.getElementById('classApplying').value);
+    formData.append('previousSchool', document.getElementById('previousSchool').value.trim());
+    formData.append('parentName', document.getElementById('parentName').value.trim());
+    formData.append('phone', document.getElementById('phone').value.trim());
+    formData.append('email', document.getElementById('email').value.trim());
+    formData.append('address', document.getElementById('address').value.trim());
+    formData.append('message', document.getElementById('message').value.trim());
+    if (documentFile) formData.append('document', documentFile);
+    if (photoFile) formData.append('photo', photoFile);
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+      await Api.submitApplication(formData);
+      status.textContent = 'Application submitted! Our admissions office will contact you soon.';
+      status.className = 'form-status success';
+      this.reset();
+    } catch (err) {
+      status.textContent = err.message || 'Something went wrong. Please try again.';
+      status.className = 'form-status error';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Application';
+    }
+  });
+</script>
+</body>
+</html>

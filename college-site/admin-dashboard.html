@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Your College Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="admin-bar">
+  <div class="wrap">
+    <span>Signed in as <strong id="admin-username">admin</strong> — front-end demo (data stored in this browser only)</span>
+    <div style="display:flex; gap:16px;">
+      <a href="index.html" target="_blank">View site</a>
+      <button id="logout-btn">Log out</button>
+    </div>
+  </div>
+</div>
+
+<div class="dash-shell">
+  <nav class="dash-nav">
+    <a href="#overview" class="dash-link active" data-panel="overview">Overview</a>
+    <a href="#content" class="dash-link" data-panel="content">Edit Content</a>
+    <a href="#applications" class="dash-link" data-panel="applications">Applications</a>
+    <a href="#settings" class="dash-link" data-panel="settings">Settings</a>
+  </nav>
+
+  <main class="dash-main">
+
+    <!-- OVERVIEW -->
+    <section class="dash-panel active" id="panel-overview">
+      <h2>Overview</h2>
+      <div class="grid-3" style="margin-top:20px;">
+        <div class="card">
+          <h3 id="ov-total">0</h3>
+          <p>Total applications received</p>
+        </div>
+        <div class="card">
+          <h3 id="ov-pending">0</h3>
+          <p>Pending review</p>
+        </div>
+        <div class="card">
+          <h3 id="ov-approved">0</h3>
+          <p>Approved</p>
+        </div>
+      </div>
+      <div class="dash-card" style="margin-top:24px;">
+        <h3>Quick links</h3>
+        <p>Use <strong>Edit Content</strong> to update the homepage text, stats, and news. Use <strong>Applications</strong> to review and manage every online application submitted through the "Apply Online" page.</p>
+      </div>
+    </section>
+
+    <!-- EDIT CONTENT -->
+    <section class="dash-panel" id="panel-content">
+      <h2>Edit Homepage Content</h2>
+
+      <div class="dash-card">
+        <h3>Hero section</h3>
+        <div class="field">
+          <label for="c-eyebrow">Eyebrow text</label>
+          <input type="text" id="c-eyebrow">
+        </div>
+        <div class="field">
+          <label for="c-title">Headline</label>
+          <input type="text" id="c-title">
+        </div>
+        <div class="field">
+          <label for="c-lede">Subtext</label>
+          <textarea id="c-lede"></textarea>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <h3>Mission statement</h3>
+        <div class="field">
+          <textarea id="c-mission"></textarea>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <h3>Stats strip</h3>
+        <div class="dash-row">
+          <div class="field"><label for="c-students">Students enrolled</label><input type="text" id="c-students"></div>
+          <div class="field"><label for="c-faculty">Faculty members</label><input type="text" id="c-faculty"></div>
+          <div class="field"><label for="c-departments">Academic departments</label><input type="text" id="c-departments"></div>
+          <div class="field"><label for="c-library">Library volumes</label><input type="text" id="c-library"></div>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <h3>News items</h3>
+        <div id="news-editor-list"></div>
+        <button type="button" class="icon-btn" id="add-news-btn" style="margin-top:10px;">+ Add news item</button>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="save-content-btn">Save Changes</button>
+      <p class="form-note">Changes apply immediately to the live homepage (in this browser).</p>
+    </section>
+
+    <!-- APPLICATIONS -->
+    <section class="dash-panel" id="panel-applications">
+      <h2>Student Applications</h2>
+      <p style="color:#4b5460;">Applications submitted through the public "Apply Online" form (Play Group through Class 12).</p>
+
+      <div class="dash-row" style="margin-bottom:16px;">
+        <div class="field">
+          <label for="filter-status">Filter by status</label>
+          <select id="filter-status">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="filter-class">Filter by class</label>
+          <select id="filter-class">
+            <option value="all">All classes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="app-table-wrap">
+        <table class="data-table" id="applications-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Applying for</th>
+              <th>Parent / Guardian</th>
+              <th>Contact</th>
+              <th>Submitted</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="applications-tbody"></tbody>
+        </table>
+        <p class="empty-state" id="applications-empty" style="display:none;">No applications yet. Submissions from the Apply Online page will appear here.</p>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="dash-panel" id="panel-settings">
+      <h2>Settings</h2>
+      <div class="dash-card" style="max-width:420px;">
+        <h3>Change admin password</h3>
+        <div class="field">
+          <label for="s-username">Username</label>
+          <input type="text" id="s-username">
+        </div>
+        <div class="field">
+          <label for="s-password">New password</label>
+          <input type="password" id="s-password">
+        </div>
+        <button type="button" class="btn btn-primary" id="save-credentials-btn">Update Credentials</button>
+        <p class="form-note">Demo-only: stored in this browser's local storage, unencrypted. A production system must hash and store credentials server-side.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="dash-toast" id="toast"></div>
+
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

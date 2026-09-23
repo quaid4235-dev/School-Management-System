@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Your College Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-crest">YC</span>
+      <span class="brand-text">
+        <strong>Your College Name</strong>
+        <span>Location, Region</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">Back to site</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="login-wrap">
+  <form class="login-box" id="login-form" novalidate>
+    <h1>Admin Login</h1>
+    <p class="sub">Sign in to edit site content and manage applications.</p>
+
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required autocomplete="username">
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required autocomplete="current-password">
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="width:100%;">Sign In</button>
+    <p class="form-status" role="status" id="login-status"></p>
+
+    <div class="login-hint">
+      Sign in with the admin account created via <code>npm run create-admin</code> on the backend.
+    </div>
+  </form>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+  document.getElementById('login-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var username = document.getElementById('username').value.trim();
+    var password = document.getElementById('password').value;
+    var status = document.getElementById('login-status');
+
+    try {
+      await Api.login(username, password);
+      window.location.href = 'admin-dashboard.html';
+    } catch (err) {
+      status.textContent = err.message || 'Incorrect username or password.';
+      status.className = 'form-status error';
+    }
+  });
+
+  // If already logged in, skip straight to dashboard
+  Api.me().then(function () {
+    window.location.href = 'admin-dashboard.html';
+  }).catch(function () { /* not logged in — stay on this page */ });
+</script>
+</body>
+</html>
