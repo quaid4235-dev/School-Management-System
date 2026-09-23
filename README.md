@@ -2,58 +2,102 @@
 
 You have two projects now:
 - `college-backend/` — the Node.js + Express + MySQL API (auth, applications, students, marks, fees, content, notices, faculty, admission cycles, posts)
-- `college-site/` — the public website + admin dashboard (HTML/CSS/JS), now wired to call the backend's API instead of browser storage
+- `college-site/` — the public website + admin dashboard (HTML/CSS/JS), now wired to call the backend API instead of browser storage
 
-## 1. Start the backend first
+## 1. Start the backend locally
 
 ```bash
 cd college-backend
-cp .env.example .env    # then edit .env with your MySQL credentials
+cp .env.example .env
+# edit .env with your local MySQL credentials
 mysql -u your_user -p your_database < schema.sql
 npm install
-npm run create-admin    # set your real admin username/password
-npm start                # runs at http://localhost:4000
+npm run create-admin
+npm start
 ```
 
-## 2. Open the front-end site
+The backend runs at `http://localhost:4000`.
 
-The site expects the backend at `http://localhost:4000/api` by default
-(set in `college-site/js/api.js`). Two ways to run the site:
+## 2. Open the frontend locally
 
-**Simplest — open the files directly:**
-Open `college-site/index.html` in your browser. As long as the backend
-is running on port 4000, everything (applications, admin login, content
-editing) will work.
-
-**Or serve it properly** (recommended, avoids some browser file:// quirks):
 ```bash
 cd college-site
 npx serve .
 ```
-Then visit the URL it gives you (usually `http://localhost:3000`).
 
-## 3. Log in as admin
+Then open the URL it gives you, usually `http://localhost:3000`.
 
-Go to `admin-login.html`, sign in with the username/password you set via
-`npm run create-admin`, and you'll land in the dashboard where you can:
-- Edit homepage content (hero text, mission, stats)
-- Add/remove news items (shown on the homepage)
-- Review, approve/reject/waitlist applications (individually or in bulk)
-- Convert an approved application into a student record
-- Export all applications as CSV
+## 3. Production deployment structure
 
-## 4. Deploying for real use
+This repository is designed for deployment as two separate services:
 
-When you're ready to put this online for real:
-1. Host the backend somewhere that supports Node.js + MySQL (a VPS, Railway, Render, or a Pakistani host that supports Node apps)
-2. Update `API_BASE` in `college-site/js/api.js` to your live backend URL (e.g. `https://api.yourcollege.edu/api`)
-3. Host the front-end files (`college-site/`) on any static host, or serve them directly from the backend's `public/` folder (copy the site files there — `server.js` already serves that folder)
-4. Add your real SendGrid/Twilio/payment gateway keys to the backend's `.env`
-5. Put everything behind HTTPS
+- `college-site/` → deploy on Vercel
+- `college-backend/` → deploy on Render or Railway
 
-## What's still a stub, on purpose
+Do not deploy the full repository as a single Vercel app unless you also split the backend into a separate service.
 
-- **Payments**: `services/payment.js` has the structure but no real gateway wired in — you need to pick JazzCash/EasyPaisa/etc., get merchant credentials, and drop in their actual API calls
-- **Email/SMS**: works once you add real SendGrid/Twilio keys to `.env` — until then it just logs to the console
-- **Teacher portal UI**: the marks API (`/api/marks`) is fully built, but there's no dedicated front-end page for teachers yet — only the API. Say the word if you want that page built next.
-- **Fee voucher / report card front-end pages**: same situation — APIs exist (`/api/fees`, student marks), but no dedicated admin UI pages yet for creating vouchers or viewing report cards. Currently only reachable via API calls directly.
+## 4. Frontend Vercel settings
+
+- Import the repo in Vercel
+- Set the root directory to `college-site`
+- Use a static site deployment
+- Set the backend URL in `college-site/js/api.js` to your live Render/Railway URL
+
+Example:
+
+```javascript
+const API_BASE = 'https://your-render-app.onrender.com/api';
+```
+
+## 5. Backend Render settings
+
+- Create a Render web service
+- Set root directory to `college-backend`
+- Build command: `npm ci`
+- Start command: `npm start`
+- Health check path: `/api/health`
+- Add env vars for database, JWT secret, and Vercel frontend URL
+
+## 6. Required production env variables
+
+In Render (or Railway), set:
+
+```text
+NODE_ENV=production
+JWT_SECRET=long-random-secret
+DB_HOST=your-production-db-host
+DB_PORT=3306
+DB_USER=your-mysql-user
+DB_PASSWORD=your-mysql-password
+DB_NAME=college_site
+FRONTEND_URL=https://your-vercel-app.vercel.app
+```
+
+Optional email/SMS values:
+
+```text
+SENDGRID_API_KEY=
+FROM_EMAIL=admissions@yourcollege.edu
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_FROM_NUMBER=
+```
+
+## 7. Create the admin account
+
+Once the production database is connected, run:
+
+```bash
+cd college-backend
+npm run create-admin
+```
+
+Then enter the admin username/password at the prompt.
+
+## 8. Production notes
+
+- Use HTTPS everywhere.
+- Do not use `localhost` in production.
+- Use a real MySQL database provider.
+- For production file uploads, move uploaded files from the local folder to cloud storage.
+- Payments remain a stub until you add a real gateway integration.

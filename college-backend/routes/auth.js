@@ -20,16 +20,21 @@ router.post('/login', async (req, res) => {
     const match = await bcrypt.compare(password, user.password_hash);
     if (!match) return res.status(401).json({ error: 'Incorrect username or password.' });
 
+    if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'change_this_to_a_long_random_string') {
+      return res.status(500).json({ error: 'JWT_SECRET is not configured securely.' });
+    }
+
     const token = jwt.sign(
       { id: user.id, username: user.username, role: user.role, full_name: user.full_name },
       process.env.JWT_SECRET,
       { expiresIn: '8h' }
     );
 
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('token', token, {
       httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+      sameSite: isProduction ? 'none' : 'lax',
+      secure: isProduction,
       maxAge: 8 * 60 * 60 * 1000
     });
 
@@ -41,7 +46,12 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('token');
+  const isProduction = process.env.NODE_ENV === 'production';
+  res.clearCookie('token', {
+    httpOnly: true,
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction
+  });
   res.json({ success: true });
 });
 
