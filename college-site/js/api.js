@@ -1,21 +1,33 @@
 // ============================================================
 // api.js — talks to the real backend (server.js) instead of
 // localStorage. Set API_BASE to wherever your backend runs.
+//
+// Vercel deployment note:
+// - For static front-end deployment, set the API base to your live backend URL
+// - For local dev, leave it as localhost:4000
+// - You can override it at runtime via window.API_BASE before calling Api.*
 // ============================================================
 
-const API_BASE = window.API_BASE || 'http://localhost:4000/api';
+const API_BASE =
+  window.API_BASE ||
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:4000/api'
+    : 'https://your-backend-domain.com/api');
 
 async function apiRequest(path, options = {}) {
   const res = await fetch(API_BASE + path, {
-    credentials: 'include', // send the auth cookie
+    credentials: 'include',
     headers: options.body instanceof FormData ? {} : { 'Content-Type': 'application/json' },
     ...options
   });
+
   let data;
   try { data = await res.json(); } catch (e) { data = null; }
+
   if (!res.ok) {
     throw new Error((data && data.error) || 'Request failed.');
   }
+
   return data;
 }
 
